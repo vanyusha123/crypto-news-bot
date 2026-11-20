@@ -9,4 +9,6 @@ jobs:
           TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          curl -s -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" -d chat_id="${CHAT}" -d text="Тест: бот работает"
+          T=$(printf '%s' "$TOKEN" | tr -d '[:space:]')
+          C=$(printf '%s' "$CHAT" | tr -d '[:space:]')
+          curl -sS --fail-with-body -X POST "https://api.telegram.org/bot${T}/sendMessage" --data-urlencode "chat_id=${C}" --data-urlencode "text=Тест: бот работает"
